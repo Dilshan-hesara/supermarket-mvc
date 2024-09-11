@@ -4,6 +4,9 @@
  */
 package edu;
 
+import edu.db.DBConnection;
+import edu.view.CustomerView;
+
 /**
  *
  * @author DILSHAN HESARA
@@ -14,7 +17,10 @@ public class mvc {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        System.out.println("Working");
+        CustomerView cus = new CustomerView();
+        cus.setVisible(true);
     }
     
 }
