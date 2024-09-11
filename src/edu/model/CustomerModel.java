@@ -5,6 +5,7 @@
 package edu.model;
 import edu.db.DBConnection;
 import edu.dto.CustomerDto;
+import java.util.List;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -64,11 +65,64 @@ public class CustomerModel {
     return resp > 0 ? "update " : "Fail";
 }
 
+ public CustomerDto search(String custId) throws SQLException, ClassNotFoundException{
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer WHERE CustID = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, custId);
+
+        ResultSet rst = statement.executeQuery();
+
+        if(rst.next()){
+            CustomerDto cusDto = new CustomerDto();
+            cusDto.setCustID(rst.getString("CustID"));
+            cusDto.setCustTitle(rst.getString("CustTitle"));
+            cusDto.setName(rst.getString("CustName"));
+            cusDto.setDOB(rst.getString("DOB"));
+            cusDto.setSalary(rst.getDouble("salary"));
+            cusDto.setAddress(rst.getString("CustAddress"));
+            cusDto.setCitiy(rst.getString("City"));
+            cusDto.setProvince(rst.getString("Province"));
+            cusDto.setPostcode(rst.getString("PostalCode"));
 
 
+    
+            return cusDto;
+        }
+        return null;
+    }
+
+     public List<CustomerDto> getAllCustomer() throws Exception{
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM Customer";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+         List<CustomerDto> customerDtos = new ArrayList<>();
+
+        ResultSet rst = statement.executeQuery();
+
+
+        while (rst.next()) {
+            CustomerDto customerDto = new CustomerDto();
+            
+            customerDto.setCustID(rst.getString("CustID"));
+            customerDto.setCustTitle(rst.getString("CustTitle"));
+            customerDto.setName(rst.getString("CustName"));
+            customerDto.setDOB(rst.getString("DOB"));
+            customerDto.setSalary(rst.getDouble("salary"));
+            customerDto.setCitiy(rst.getString("City"));
+            customerDto.setProvince(rst.getString("Province"));
+            customerDto.setAddress(rst.getString("CustAddress"));
+            customerDto.setPostcode(rst.getString("PostalCode"));
+
+
+             customerDtos.add(customerDto);
+        }
+
+        return customerDtos;
 
 
 }
 
-
+}
 
