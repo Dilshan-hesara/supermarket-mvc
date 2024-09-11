@@ -34,5 +34,41 @@ public class CustomerModel {
     int resp = statement.executeUpdate();
     return resp > 0 ? "Success" : "Fail";
 }
-    
+     public String delete(CustomerDto dto) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = " DELETE FROM customer WHERE CustID = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, dto.getCustID());
+        
+        int resp = statement.executeUpdate();
+        return resp > 0 ? "Succes" : "Fail";
 }
+
+    public String update(CustomerDto dto) throws SQLException, ClassNotFoundException {
+    Connection connection = DBConnection.getInstance().getConnection();
+    String sql =  "UPDATE customer SET CustID = ?, CustTitle = ?, CustName = ?, DOB = ?, Salary = ?, CustAddress = ?, City = ?, Province = ?, PostalCode = ? WHERE CustID = ?";
+
+    PreparedStatement statement = connection.prepareStatement(sql);
+    
+    statement.setString(1, dto.getCustID());
+    statement.setString(2, dto.getCustTitle());
+    statement.setString(3, dto.getName());
+    statement.setString(4, dto.getDOB());
+    statement.setDouble(5, dto.getSalary());
+    statement.setString(6, dto.getCitiy());
+    statement.setString(7, dto.getProvince());
+    statement.setString(8, dto.getAddress());
+    statement.setString(9, dto.getPostcode());
+
+    int resp = statement.executeUpdate();
+    return resp > 0 ? "update " : "Fail";
+}
+
+
+
+
+
+}
+
+
+
