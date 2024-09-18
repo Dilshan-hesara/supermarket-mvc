@@ -7,6 +7,9 @@ package edu;
 import edu.db.DBConnection;
 import edu.view.CustomerView;
 
+import java.sql.SQLException;
+
+
 /**
  *
  * @author DILSHAN HESARA
@@ -16,11 +19,12 @@ public class mvc {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         
-        System.out.println("Working");
-        CustomerView cus = new CustomerView();
-        cus.setVisible(true);
+          System.out.println("Hello");
+        DBConnection.getInstance().getConnection();
+        new CustomerView().setVisible(true);
+    }
     }
     
-}
+
