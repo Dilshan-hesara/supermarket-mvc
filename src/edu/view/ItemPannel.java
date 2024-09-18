@@ -248,7 +248,7 @@ public class ItemPannel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void ntableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ntableMouseClicked
-        //searchItem();       // TODO add your handling code here:
+    searchItem();        //searchItem();       // TODO add your handling code here:
     }//GEN-LAST:event_ntableMouseClicked
 
     private void txtcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodeActionPerformed
@@ -300,4 +300,31 @@ public class ItemPannel extends javax.swing.JPanel {
         ntable.setModel(dtm);
     }
 
+  private void searchItem(){
+        String itemCode = (String) ntable.getValueAt(ntable.getSelectedRow(), 0);
+        System.out.println(itemCode);
+
+        
+        
+                try {
+
+            ItemDto itemDto = ITEM_CONTROLLER.searchItem(itemCode);
+            if (itemDto != null) {
+                txtcode.setText(itemDto.getItemCode());
+                txtdese.setText(itemDto.getDescription());
+                txtpac.setText(itemDto.getPackSize());
+                txtqty.setText(Integer.toString(itemDto.getQoh()));
+                txtprice.setText(Double.toString(itemDto.getUnitPrice()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Item Not Found");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
+    }
+
+ 
+ 
+ 
 }

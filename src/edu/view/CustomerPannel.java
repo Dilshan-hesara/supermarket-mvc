@@ -215,8 +215,8 @@ public class CustomerPannel extends javax.swing.JPanel {
                             .addComponent(delete)
                             .addComponent(update))))
                 .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -352,5 +352,22 @@ public class CustomerPannel extends javax.swing.JPanel {
 
     }
    
+    
+    private void deleteCustomer() {
+    // Assuming customer ID is the only required field to delete the customer
+    String customerId = txtid.getText();
+
+    try {
+        // Call the delete method in the controller and pass the customer ID
+        String resp = customerController.deleteCustomer(customerId);
+        JOptionPane.showMessageDialog(this, resp);
+        
+        clearForm(); // Clear the form after successful deletion
+        loadTable(); // Refresh the table to reflect the deletion
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
+
    
 }
