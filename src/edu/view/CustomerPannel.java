@@ -17,13 +17,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CustomerPannel extends javax.swing.JPanel {
 
-            private final CustomerController CUSTOMER_CONTROLLER;
+     private CustomerController customerController = new CustomerController();
 
     /**
      * Creates new form CustomerPannel
      */
     public CustomerPannel() {
-             CUSTOMER_CONTROLLER = new CustomerController();
 
         initComponents();
         loadTable();
@@ -97,6 +96,11 @@ public class CustomerPannel extends javax.swing.JPanel {
         delete.setText("DELETE");
 
         save.setText("SAVE");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
 
         update.setText("UPDATE");
 
@@ -111,6 +115,11 @@ public class CustomerPannel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ctable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ctableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(ctable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -211,6 +220,14 @@ public class CustomerPannel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+      saveCustomer();            // TODO add your handling code here:
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void ctableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ctableMouseClicked
+    searchCustomer();        // TODO add your handling code here:
+    }//GEN-LAST:event_ctableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ctable;
@@ -253,7 +270,7 @@ public class CustomerPannel extends javax.swing.JPanel {
         };
         
         try {
-            ArrayList<CustomerDto> customerDtos = CUSTOMER_CONTROLLER.getAllItems();
+            ArrayList<CustomerDto> customerDtos = customerController.getAllItems();
             for (CustomerDto customerDto : customerDtos) {
                 Object[] rowData = {customerDto.getCustID(), customerDto.getCustTitle(), customerDto.getName(), customerDto.getDOB(),customerDto.getSalary(),customerDto.getAddress(),customerDto.getCitiy(),customerDto.getProvince(),customerDto.getPostcode()};
                 dtm.addRow(rowData);
@@ -265,4 +282,75 @@ public class CustomerPannel extends javax.swing.JPanel {
    
         
   }
+  
+  
+  
+   
+  private void saveCustomer() {
+   CustomerDto customerDto = new CustomerDto(
+    txtid.getText(),      
+    txttit.getText(),   
+    txtname.getText(),    
+    txtdob.getText(),    
+    Double.parseDouble(txtsa.getText()), 
+    txtadd.getText(),    
+    txtci.getText(),  
+    txtpro.getText(),     
+    txtpas.getText()    
+);
+
+
+    try {
+        String resp = customerController.saveCustomer(customerDto);
+        JOptionPane.showMessageDialog(this, resp);
+        clearForm();
+        loadTable();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
+
+   private void clearForm(){
+
+        txtid.setText("");
+        txttit.setText("");
+        txtname.setText("");
+        txtdob.setText("");
+        txtsa.setText("");
+        txtadd.setText("");
+        txtci.setText("");
+        txtpro.setText("");
+        txtpas.setText("");
+  
+    }
+    private void searchCustomer(){
+        String cuid = (String) ctable.getValueAt(ctable.getSelectedRow(), 0);
+        System.out.println(cuid);
+
+       
+        try {
+
+         CustomerDto cuDto = customerController.searchCustomer(cuid);
+            if (cuDto != null) {
+                txtid.setText(cuDto.getCustID());
+                txttit.setText(cuDto.getCustTitle());
+                txtname.setText(cuDto.getName());
+                txtdob.setText(cuDto.getDOB());
+                txtsa.setText(Double.toString(cuDto.getSalary()));
+                txtadd.setText(cuDto.getAddress());
+                txtci.setText(cuDto.getCitiy());
+                txtpro.setText(cuDto.getProvince());
+                txtpas.setText(cuDto.getPostcode());
+         
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "customer Not Found");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
+    }
+   
+   
 }
