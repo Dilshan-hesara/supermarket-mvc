@@ -33,6 +33,7 @@ public class CustomerView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         macust = new javax.swing.JButton();
         macust1 = new javax.swing.JButton();
+        macust2 = new javax.swing.JButton();
         body = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,6 +67,13 @@ public class CustomerView extends javax.swing.JFrame {
             }
         });
 
+        macust2.setText("ORDER ");
+        macust2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                macust2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -73,7 +81,8 @@ public class CustomerView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(macust)
-                    .addComponent(macust1))
+                    .addComponent(macust1)
+                    .addComponent(macust2))
                 .addGap(0, 23, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -83,6 +92,8 @@ public class CustomerView extends javax.swing.JFrame {
                 .addComponent(macust1)
                 .addGap(18, 18, 18)
                 .addComponent(macust)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(macust2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -141,6 +152,10 @@ public class CustomerView extends javax.swing.JFrame {
         loadItemForm();          // TODO add your handling code here:
     }//GEN-LAST:event_macust1ActionPerformed
 
+    private void macust2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_macust2ActionPerformed
+    loadOrders();        // TODO add your handling code here:
+    }//GEN-LAST:event_macust2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -183,6 +198,7 @@ public class CustomerView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton macust;
     private javax.swing.JButton macust1;
+    private javax.swing.JButton macust2;
     // End of variables declaration//GEN-END:variables
 
   private void loadCustomerForm() {
@@ -205,4 +221,13 @@ public class CustomerView extends javax.swing.JFrame {
            body.revalidate();
     }
 
+     private void loadOrders() {
+      
+           body.removeAll();
+           OrdersPannel orPanel = new OrdersPannel();
+           orPanel.setSize(body.getWidth(), body.getHeight());
+           body.add(orPanel);
+           body.repaint();
+           body.revalidate();
+    }
 }

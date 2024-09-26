@@ -352,22 +352,6 @@ public class CustomerPannel extends javax.swing.JPanel {
 
     }
    
-    
-    private void deleteCustomer() {
-    // Assuming customer ID is the only required field to delete the customer
-    String customerId = txtid.getText();
-
-    try {
-        // Call the delete method in the controller and pass the customer ID
-        String resp = customerController.deleteCustomer(customerId);
-        JOptionPane.showMessageDialog(this, resp);
-        
-        clearForm(); // Clear the form after successful deletion
-        loadTable(); // Refresh the table to reflect the deletion
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
-}
 
    
 }
